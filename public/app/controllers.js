@@ -6,13 +6,12 @@ angular.module('ClickMapCtrls', [])
 	$scope.currentColor=0
 	$scope.editing=false
 	$scope.newElement=null
-	$scope.editTop=0
-	$scope.editLeft=0
 	$scope.svgClick=function(e){
 		$scope.newElement={x:e.offsetX-$scope.iconSize/2,y:e.offsetY-$scope.iconSize/2,color:$scope.colors[$scope.currentColor]}
 		$scope.editing=true
-		$scope.editTop=e.offsetY-$scope.iconSize/2
-		$scope.editLeft=e.offsetX+$scope.iconSize
+		editTop=e.offsetY-$scope.iconSize/2
+		editLeft=e.offsetX+$scope.iconSize
+		$scope.editPanelStyle={top:editTop+"px",left:editLeft+"px"}
 		$timeout(function(){
 			//timeout allows for the elements to render before giving focus.
 			document.getElementById("elementTitle").focus()
@@ -27,6 +26,8 @@ angular.module('ClickMapCtrls', [])
 	}
 	$scope.mouseIn=function(index){
 		$scope.hover=$scope.icons[index]
+		$scope.hoverPosition={top:$scope.hover.y+"px",left:($scope.hover.x+$scope.iconSize*1.5)+"px"}
+		console.log($scope.hover)
 	}
 	$scope.mouseOut=function(index){
 		$scope.hover=null

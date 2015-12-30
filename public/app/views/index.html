@@ -1,13 +1,13 @@
 <div ng-controller="ClickMapCtrl">
 <div>
-	<div style="position:absolute;top:{{editTop}}px;left:{{editLeft}}px;background-color:black" ng-if="editing" id="editPanel">
-		<input ng-model="newElement.title" placeholder="Title" id="elementTitle" ng-keypress="keypress($event)" style="width:124px">
+	<div ng-style="editPanelStyle" ng-if="editing" id="editPanel">
+		<input ng-model="newElement.title" placeholder="Title" id="elementTitle" ng-keypress="keypress($event)">
 		<div>
-		<div ng-click="save()" style="background-color:green;width:60px;display:inline-block;">Save</div>
-		<div ng-click="cancel()" style="background-color:red;width:60px;display:inline-block;">Cancel</div>
+		<div ng-click="save()" id="editPanelSave">Save</div>
+		<div ng-click="cancel()" id="editPanelCancel">Cancel</div>
 		</div>
 	</div>
-	<div style="position:absolute;top:{{hover.y}}px;left:{{hover.x+iconSize*1.5}}px;background-color:black;color:white" ng-if="hover.title" id="editPanel">
+	<div ng-style="hoverPosition" ng-if="hover.title" id="hover">
 		{{hover.title}}
 	</div>
 	<svg width="640" height="430" ng-click="svgClick($event)">
