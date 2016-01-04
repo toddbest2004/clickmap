@@ -10,6 +10,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:true }));
 
+var apiCtrl = require("./api/")
+app.use("/api", apiCtrl)
+
 app.get('/*', function(req,res){
 	res.sendFile(path.join(__dirname, 'public/index.html'))
 })

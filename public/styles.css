@@ -9,14 +9,17 @@
 	background-color:green;
 	width:60px;
 	display:inline-block;
+	cursor: pointer;
 }
 #editPanelCancel{
 	background-color:red;
 	width:60px;
 	display:inline-block;
+	cursor: pointer;
 }
 #hover{
 	position:absolute;
 	background-color:black;
-	color:white
+	color:white;
+	padding:0 10px;
 }

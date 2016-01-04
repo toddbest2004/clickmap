@@ -16,10 +16,11 @@
 		<rect fill="{{editElement.color}}" xlink:href="/images/test.png" ng-attr-x={{editElement.x}} ng-attr-y={{editElement.y}} ng-attr-width="{{iconSize}}" ng-attr-height="{{iconSize}}" ng-if="editElement"></rect>
 	</svg>
 </div>
-<div ng-if="editable">
+<div class="iconBar" ng-if="editable">
 	<svg ng-attr-width="{{width}}" ng-attr-height="{{iconSelectSize+10}}">
 		<rect width="100%" height="100%" fill="black"></rect>
 		<rect ng-attr-width="{{iconSelectSize+6}}" ng-attr-height="{{iconSelectSize+6}}" fill="white" ng-attr-x="{{currentColor*(iconSelectSize+5)+2}}" y="2"></rect>
 		<rect ng-attr-fill={{color}} y="5" ng-attr-x={{$index*(iconSelectSize+5)+5}} ng-attr-width="{{iconSelectSize}}" ng-attr-height="{{iconSelectSize}}" ng-repeat="color in colors" ng-click="chooseIcon($index)"></rect>
 	</svg>
+	<button ng-click="saveMap()">Save Map</button>
 </div>

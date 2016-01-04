@@ -4,7 +4,7 @@ angular.module('ClickMapCtrls', [])
 		$scope.iconSize = 12
 		$scope.colors=["black", "blue", "red", "yellow"]
 		$scope.icons=[]
-		$scope.image="/images/tanaan.png"
+		$scope.image="blank"
 		$scope.width=640
 		$scope.height=430
 		$scope.iconSelectSize=20
@@ -77,6 +77,15 @@ angular.module('ClickMapCtrls', [])
 				$scope.cancel()
 			}
 		}
+		$scope.saveMap=function(){
+			$scope.image="/images/tanaan.png"
+		}
+		$scope.loadMap=function(){
+
+		}
+		$scope.loadImage=function(){
+			
+		}
 	}]
 
 	return {
@@ -96,7 +105,13 @@ angular.module('ClickMapCtrls', [])
 			//get background image from server if img is defined(and not a saved map)
 			//get iconSet if defined
 			$timeout(function(){
-				console.log("loading map")
+				if($scope.mapId){
+					$scope.loadMap()
+					return
+				}
+				if($scope.img){
+					$scope.loadImage()
+				}
 			})
 		}
 	}
