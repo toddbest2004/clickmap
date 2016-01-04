@@ -1,0 +1,27 @@
+<div ng-controller="ClickMapCtrl">
+<div>
+	<div ng-style="editPanelStyle" ng-if="editing" id="editPanel">
+		<input ng-model="newElement.title" placeholder="Title" id="elementTitle" ng-keypress="keypress($event)">
+		<div>
+		<div ng-click="save()" id="editPanelSave">Save</div>
+		<div ng-click="cancel()" id="editPanelCancel">Cancel</div>
+		</div>
+	</div>
+	<div ng-style="hoverPosition" ng-if="hover.title" id="hover">
+		{{hover.title}}
+	</div>
+	<svg width="640" height="430" ng-click="svgClick($event)">
+		<rect width="100%" height="100%" fill="black"></rect>
+		<image xlink:href="/images/tanaan.png" width="100%" height="100%"></image>
+		<rect fill="{{icon.color}}" xlink:href="/images/test.png" ng-attr-x={{icon.x}} ng-attr-y={{icon.y}} ng-attr-width="{{iconSize}}" ng-attr-height="{{iconSize}}" ng-repeat="icon in icons" ng-click="iconClick($event)" ng-mouseenter="mouseIn($index)" ng-mouseleave="mouseOut($index)"></rect>
+		<rect fill="{{newElement.color}}" xlink:href="/images/test.png" ng-attr-x={{newElement.x}} ng-attr-y={{newElement.y}} ng-attr-width="{{iconSize}}" ng-attr-height="{{iconSize}}" ng-if="newElement"></rect>
+	</svg>
+</div>
+<div>
+	<svg width="640" height="30">
+		<rect width="100%" height="100%" fill="black"></rect>
+		<rect width="26" height="26" fill="white" ng-attr-x="{{currentColor*25+2}}" y="2"></rect>
+		<rect ng-attr-fill={{color}} y="5" ng-attr-x={{$index*25+5}} width="20" height="20" ng-repeat="color in colors track by $index" ng-click="chooseIcon($index)"></rect>
+	</svg>
+</div>
+</div>
