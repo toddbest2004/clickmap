@@ -2,8 +2,8 @@ angular.module('ClickMapCtrls', [])
 .directive('cmClickmap', function($timeout){
 	var clickMapCtrl = ['$scope', '$http', '$location', '$routeParams', '$timeout', '$window', function($scope, $http, $location, $routeParams, $timeout, $window) {
 		$scope.iconSize = 12
-		$scope.colors=["black", "blue", "red", "yellow"]
-		$scope.icons=[]
+		$scope.icons=["black", "blue", "red", "yellow"]
+		$scope.markers=[]
 		$scope.image="blank"
 		$scope.width=640
 		$scope.height=430
@@ -15,7 +15,7 @@ angular.module('ClickMapCtrls', [])
 			if(!$scope.editable){
 				return
 			}
-			$scope.editElement={isnew:true,x:e.offsetX-$scope.iconSize/2,y:e.offsetY-$scope.iconSize/2,color:$scope.colors[$scope.currentColor]}
+			$scope.editElement={isnew:true,x:e.offsetX-$scope.iconSize/2,y:e.offsetY-$scope.iconSize/2,icon:$scope.icons[$scope.currentColor]}
 			$scope.editing=true
 			editTop=e.clientY-$scope.iconSize/2+$window.scrollY
 			editLeft=e.clientX+$scope.iconSize+$window.scrollX
@@ -30,9 +30,9 @@ angular.module('ClickMapCtrls', [])
 			//We need to either update the old icon or delete it.
 			e.stopPropagation()
 			if($scope.editable){
-				console.log($scope.icons[index])
+				console.log($scope.markers[index])
 				$scope.editing=true
-				$scope.editElement=$scope.icons[index]
+				$scope.editElement=$scope.markers[index]
 				editTop=e.clientY-$scope.iconSize/2+$window.scrollY
 				editLeft=e.clientX+$scope.iconSize+$window.scrollX
 				$scope.editPanelStyle={top:editTop+"px",left:editLeft+"px"}
@@ -51,7 +51,7 @@ angular.module('ClickMapCtrls', [])
 			var elementRect = e.target.getBoundingClientRect()
 			var top = elementRect.top
 			var left = elementRect.right+$scope.iconSize*.5 //Sets the left of the hover tooltip to just past the rightmost part of the icon
-			$scope.hover=$scope.icons[index]
+			$scope.hover=$scope.markers[index]
 			$scope.hoverPosition={top:top+"px",left:left+"px"}
 			// console.log(e.target.getBoundingClientRect())
 		}
@@ -62,7 +62,7 @@ angular.module('ClickMapCtrls', [])
 			if(!$scope.editElement.title){
 				$scope.editElement.title=''
 			}
-			$scope.icons.push($scope.editElement)
+			$scope.markers.push($scope.editElement)
 			$scope.editing=false
 			$scope.editElement=null
 		}
@@ -78,10 +78,31 @@ angular.module('ClickMapCtrls', [])
 			}
 		}
 		$scope.saveMap=function(){
-			$scope.image="/images/tanaan.png"
+			var mapId = $scope.mapId || ''
+			$http({
+				method: 'POST',
+				url: '/api/maps/'+mapId,
+				data: {
+					markers:$scope.markers,
+					image:$scope.image
+				}
+			}).then(function successCallback(response) {
+				$scope.mapId = response.data.mapId
+			}, function errorCallback(response) {
+				console.log(response.data)
+			})
 		}
 		$scope.loadMap=function(mapId){
-
+			$http({
+				method: 'GET',
+				url: '/api/maps/'+mapId,
+				data: {markers:$scope.markers}
+			}).then(function successCallback(response) {
+				$scope.markers = response.data.markers
+				$scope.image = response.data.image
+			}, function errorCallback(response) {
+				console.log(response.data)
+			})
 		}
 		$scope.loadImage=function(image){
 			if(typeof(image)!=='string'||image.indexOf('/')!==-1){

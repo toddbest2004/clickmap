@@ -12,15 +12,15 @@
 	<svg ng-attr-width="{{width}}" ng-attr-height="{{height}}" ng-click="svgClick($event)">
 		<rect width="100%" height="100%" fill="black"></rect>
 		<image xlink:href="{{image}}" width="100%" height="100%"></image>
-		<rect fill="{{icon.color}}" xlink:href="/images/test.png" ng-attr-x={{icon.x}} ng-attr-y={{icon.y}} ng-attr-width="{{iconSize}}" ng-attr-height="{{iconSize}}" ng-repeat="icon in icons track by $index" ng-click="iconClick($event, $index)" ng-mouseenter="mouseIn($index, $event)" ng-mouseleave="mouseOut($index)"></rect>
-		<rect fill="{{editElement.color}}" xlink:href="/images/test.png" ng-attr-x={{editElement.x}} ng-attr-y={{editElement.y}} ng-attr-width="{{iconSize}}" ng-attr-height="{{iconSize}}" ng-if="editElement"></rect>
+		<rect fill="{{marker.icon}}" xlink:href="/images/test.png" ng-attr-x={{marker.x}} ng-attr-y={{marker.y}} ng-attr-width="{{iconSize}}" ng-attr-height="{{iconSize}}" ng-repeat="marker in markers track by $index" ng-click="iconClick($event, $index)" ng-mouseenter="mouseIn($index, $event)" ng-mouseleave="mouseOut($index)"></rect>
+		<rect fill="{{editElement.icon}}" xlink:href="/images/test.png" ng-attr-x={{editElement.x}} ng-attr-y={{editElement.y}} ng-attr-width="{{iconSize}}" ng-attr-height="{{iconSize}}" ng-if="editElement"></rect>
 	</svg>
 </div>
 <div class="iconBar" ng-if="editable">
 	<svg ng-attr-width="{{width}}" ng-attr-height="{{iconSelectSize+10}}">
 		<rect width="100%" height="100%" fill="black"></rect>
 		<rect ng-attr-width="{{iconSelectSize+6}}" ng-attr-height="{{iconSelectSize+6}}" fill="white" ng-attr-x="{{currentColor*(iconSelectSize+5)+2}}" y="2"></rect>
-		<rect ng-attr-fill={{color}} y="5" ng-attr-x={{$index*(iconSelectSize+5)+5}} ng-attr-width="{{iconSelectSize}}" ng-attr-height="{{iconSelectSize}}" ng-repeat="color in colors" ng-click="chooseIcon($index)"></rect>
+		<rect ng-attr-fill={{icon}} y="5" ng-attr-x={{$index*(iconSelectSize+5)+5}} ng-attr-width="{{iconSelectSize}}" ng-attr-height="{{iconSelectSize}}" ng-repeat="icon in icons" ng-click="chooseIcon($index)"></rect>
 	</svg>
 	<button ng-click="saveMap()">Save Map</button>
 </div>
