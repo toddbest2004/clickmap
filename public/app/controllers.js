@@ -80,11 +80,26 @@ angular.module('ClickMapCtrls', [])
 		$scope.saveMap=function(){
 			$scope.image="/images/tanaan.png"
 		}
-		$scope.loadMap=function(){
+		$scope.loadMap=function(mapId){
 
 		}
-		$scope.loadImage=function(){
-			
+		$scope.loadImage=function(image){
+			if(typeof(image)!=='string'||image.indexOf('/')!==-1){
+				$scope.loadImageFailed()
+				return
+			}
+			$http({
+				method: 'GET',
+				url: '/api/images/'+image
+			}).then(function successCallback(response) {
+				$scope.image=response.data
+			}, function errorCallback(response) {
+				$scope.loadImageFailed()
+				return
+			});
+		}
+		$scope.loadImageFailed=function(){
+			console.log("Error loading image from server.")
 		}
 	}]
 
@@ -106,11 +121,11 @@ angular.module('ClickMapCtrls', [])
 			//get iconSet if defined
 			$timeout(function(){
 				if($scope.mapId){
-					$scope.loadMap()
+					$scope.loadMap($scope.mapId)
 					return
 				}
 				if($scope.img){
-					$scope.loadImage()
+					$scope.loadImage($scope.img)
 				}
 			})
 		}

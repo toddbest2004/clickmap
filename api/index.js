@@ -7,7 +7,7 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 router.get("/images/:id", function(req, res){
-	res.send("images")
+	res.send("/images/tanaan.png")
 })
 router.get("/maps/:id", function(req, res){
 	res.send("maps")
